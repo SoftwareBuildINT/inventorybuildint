@@ -1,2 +1,1 @@
-# inventorybuildint
-Inventory Web Application
+# inventory
