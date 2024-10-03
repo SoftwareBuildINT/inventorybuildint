@@ -23,7 +23,7 @@ const { createCanvas } = require("canvas");
 const Barcode = require("jsbarcode");
 const qr = require("qrcode");
 //const { isWeakMap } = require('util/types');
-/// hellol
+/// hello
 
 app.use(bodyParser.json());
 
