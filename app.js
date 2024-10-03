@@ -13,7 +13,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
 
-/// hellol
 
 app.use(bodyParser.json());
 
