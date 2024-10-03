@@ -52,7 +52,7 @@ app.use(
     saveUninitialized: true,
   })
 );
-//hola
+
 connection.getConnection((err) => {
   if (err) throw err;
   console.log("Connected to MySQL database");
