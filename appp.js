@@ -23,7 +23,7 @@ const { createCanvas } = require("canvas");
 const Barcode = require("jsbarcode");
 const qr = require("qrcode");
 //const { isWeakMap } = require('util/types');
-/// hellooooo
+
 
 app.use(bodyParser.json());
 
@@ -2370,7 +2370,7 @@ app.get("/item-id-dropdown", (req, res) => {
   );
 });
 
-app.get("/notifications", (req, res) => {
+app.get("/notifications", verifyToken, (req, res) => {
   connection.query(
     "SELECT item_name, count(item_name) AS quantity FROM stocks_test1 GROUP BY item_name HAVING COUNT(item_name) < 20 order by item_name",
     (error, results) => {
