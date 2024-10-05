@@ -194,7 +194,7 @@ app.post("/hash_password", async (req, res) => {
   }
 });
 
-app.get("/added-item-list", (req, res) => {
+app.get("/added-item-list", verifyToken, (req, res) => {
   //const { item_name } = req.body;
 
   connection.query(
@@ -1171,7 +1171,7 @@ app.post("/send-material-ok", verifyToken, (req, res) => {
   });
 });
 
-app.post("/send-material-ooo", (req, res) => {
+app.post("/send-material-ooo", verifyToken, (req, res) => {
   const {
     quantity,
     project_name,
@@ -1361,7 +1361,7 @@ app.post("/send-material-new", (req, res) => {
 });
 
 // For adding items into stocks table (add-item)
-app.post("/api/add-item", (req, res) => {
+app.post("/api/add-item", verifyToken, (req, res) => {
   const {
     item_id,
     item_name,
@@ -1777,7 +1777,7 @@ app.post("/api/add-item-ooo", (req, res) => {
 // test 2
 
 //Made based on existing Inventory table naming format for item_id
-app.post("/api/add-item-new", (req, res) => {
+app.post("/api/add-item-new", verifyToken, (req, res) => {
   const {
     quantity,
     stock_holder_name,
@@ -1888,7 +1888,7 @@ app.post("/api/add-item-new", (req, res) => {
   }
 });
 
-app.get("/supplier-dropdown", (req, res) => {
+app.get("/supplier-dropdown", verifyToken, (req, res) => {
   connection.query(
     "SELECT distinct name, id FROM suppliers",
     (error, results) => {
@@ -1901,7 +1901,7 @@ app.get("/supplier-dropdown", (req, res) => {
   );
 });
 
-app.get("/item-dropdown", (req, res) => {
+app.get("/item-dropdown", verifyToken, (req, res) => {
   connection.query(
     "SELECT distinct item_name FROM stocks_test1",
     (error, results) => {
@@ -1927,7 +1927,7 @@ app.get("/stock-count", verifyToken, (req, res) => {
   );
 });
 
-app.post("/delete-po", (req, res) => {
+app.post("/delete-po", verifyToken, (req, res) => {
   const { id } = req.body;
 
   // Update status of query in database
@@ -1948,7 +1948,7 @@ app.post("/delete-po", (req, res) => {
   });
 });
 
-app.post("/accept-po", (req, res) => {
+app.post("/accept-po", verifyToken, (req, res) => {
   const { id } = req.body;
 
   // Update status of query in database
@@ -1969,7 +1969,7 @@ app.post("/accept-po", (req, res) => {
   });
 });
 
-app.post("/delete-supplier", (req, res) => {
+app.post("/delete-supplier", verifyToken, (req, res) => {
   // const allowedRoles = ["Admin"];
 
   // if (!allowedRoles.includes(req.user_data.role)) {
@@ -2107,7 +2107,7 @@ app.post("/change-password", verifyToken, (req, res) => {
   );
 });
 
-app.get("/active-po", (req, res) => {
+app.get("/active-po", verifyToken, (req, res) => {
   connection.query(
     "SELECT COUNT(status) AS Active FROM po_list WHERE status = 3;",
     (error, results) => {
@@ -2120,7 +2120,7 @@ app.get("/active-po", (req, res) => {
   );
 });
 
-app.get("/pending-po", (req, res) => {
+app.get("/pending-po", verifyToken, (req, res) => {
   connection.query(
     "SELECT COUNT(status) AS Pending FROM po_list WHERE status = 1;",
     (error, results) => {
@@ -2133,7 +2133,7 @@ app.get("/pending-po", (req, res) => {
   );
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", verifyToken, (req, res) => {
   connection.query("SELECT COUNT(id) AS user FROM users;", (error, results) => {
     if (error) {
       console.error("Error fetching items from database ");
@@ -2143,7 +2143,7 @@ app.get("/users", (req, res) => {
   });
 });
 
-app.get("/pending-request", (req, res) => {
+app.get("/pending-request", verifyToken, (req, res) => {
   connection.query(
     "SELECT count(id) AS Pending FROM requestmaterial WHERE approve_status = 0;",
     (error, results) => {
@@ -2232,7 +2232,7 @@ app.post("/download-report", (req, res) => {
   });
 });
 
-app.post("/accept-request", (req, res) => {
+app.post("/accept-request", verifyToken, (req, res) => {
   const { id, remark } = req.body;
 
   const approved_date = new Date();
@@ -2280,7 +2280,7 @@ app.post("/delete-request", verifyToken, (req, res) => {
   });
 });
 
-app.get("/user-list", (req, res) => {
+app.get("/user-list", verifyToken, (req, res) => {
   connection.query(
     "SELECT id, first_name, email, contact_no FROM users ;",
     (error, results) => {
@@ -2383,7 +2383,7 @@ app.get("/notifications", verifyToken, (req, res) => {
   );
 });
 
-app.get("/supp-count", (req, res) => {
+app.get("/supp-count", verifyToken, (req, res) => {
   connection.query(
     "SELECT count(id) AS suppcount FROM suppliers;",
     (error, results) => {
@@ -2571,7 +2571,7 @@ app.get("/gen-barcode", (req, res) => {
 
 //Item Delete Request Page
 
-app.get("/deleted-item-list", (req, res) => {
+app.get("/deleted-item-list", verifyToken, (req, res) => {
   //const { item_name } = req.body;
 
   connection.query(
@@ -2588,7 +2588,7 @@ app.get("/deleted-item-list", (req, res) => {
 
 //Item Delete Request Page => On click Accept = PM
 
-app.post("/delete-item", (req, res) => {
+app.post("/delete-item", verifyToken, (req, res) => {
   // const allowedRoles = ["Admin"];
 
   // if (!allowedRoles.includes(req.user_data.role)) {
@@ -2619,7 +2619,7 @@ app.post("/delete-item", (req, res) => {
 
 //Deleted Item list Page = IM
 
-app.get("/deleted-item-request", (req, res) => {
+app.get("/deleted-item-request", verifyToken, (req, res) => {
   // 0 = Pending, 1 = Approved, 2 = Declined, 5 = Delete Request
   connection.query(
     "SELECT * FROM stocks_test1 WHERE item_status = 5 ORDER BY deleted_date DESC",
@@ -2635,7 +2635,7 @@ app.get("/deleted-item-request", (req, res) => {
 
 //Delete item by IM => Added item list
 
-app.post("/delete-request-item-accept", (req, res) => {
+app.post("/delete-request-item-accept", verifyToken, (req, res) => {
   // const allowedRoles = ["Admin"];
 
   // if (!allowedRoles.includes(req.user_data.role)) {
@@ -2665,7 +2665,7 @@ app.post("/delete-request-item-accept", (req, res) => {
   });
 });
 
-app.post("/delete-request-item-decline", (req, res) => {
+app.post("/delete-request-item-decline", verifyToken, (req, res) => {
   // const allowedRoles = ["Admin"];
 
   // if (!allowedRoles.includes(req.user_data.role)) {
